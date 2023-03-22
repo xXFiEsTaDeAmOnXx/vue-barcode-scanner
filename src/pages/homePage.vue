@@ -35,7 +35,7 @@ export default {
             console.log(result)
         })
         }
-        },100)
+        },5000)
                
     },
     methods: {
