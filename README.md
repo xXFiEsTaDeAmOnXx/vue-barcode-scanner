@@ -33,3 +33,6 @@ npm run build
 ```sh
 npm run lint
 ```
+### Link to Azure
+
+https://witty-flower-08eca7003.2.azurestaticapps.net/
