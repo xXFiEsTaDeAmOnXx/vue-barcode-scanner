@@ -1,10 +1,10 @@
 <template>
     <h1>QR & BARCODE SCANNER</h1>
-    <p>{{result}}</p>
     <StreamBarcodeReader id = "video" @decode="onDecode" @loaded="onLoaded"></StreamBarcodeReader>
     <div id="app">
-    <p v-if="showSuccessMessage">Barcode erfolgreich gescannt!</p>
-</div>
+    <p class="success-message" v-if="showSuccessMessage">RECOGNIZED </p>{{result}}
+    
+    </div>
 
 </template>
   
@@ -24,7 +24,7 @@ export default {
     },
     methods: {
        
-        onDecode(result) { this.result = result;  showSuccessMessage: true},
+        onDecode(result) { this.result = result;  this.showSuccessMessage = true},
         onLoaded(result) { console.log(result) }
         
     }
@@ -43,6 +43,11 @@ h1 {
     color: rgb(93, 93, 93);
 }
 
+.sucess-message{
+    color: green;
+    font-weight: bold;
+}
+
 #video {
 
     width: fit-content;
@@ -51,3 +56,4 @@ h1 {
 }
 
 </style>
+
