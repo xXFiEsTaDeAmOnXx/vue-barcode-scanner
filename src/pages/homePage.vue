@@ -5,22 +5,39 @@
     <p class="success-message" v-if="showSuccessMessage">RECOGNIZED </p>{{result}}
     
     </div>
-
+    <itemComponent title="test"></itemComponent>
 </template>
   
 <script>
 import { StreamBarcodeReader } from "vue-barcode-reader";
+import itemComponent from '../components/ItemComponent.vue'
+
 
 export default {
     name: 'homePage',
-    components: { StreamBarcodeReader },
+    components: { StreamBarcodeReader, itemComponent },
     data() {
         
         return {
+
             showSuccessMessage: false,
-                result: ""
-                
+                result: "",
+                loaded:false,
         }
+    },
+    mounted(){
+        setTimeout(()=>{
+        if(!this.loaded){
+        this.$swal({
+        title: 'Error!',
+        text: 'You need to turn your camara on to use the barcode app.',
+        icon: 'error',
+        confirmButtonText: 'Okay'}).then(result =>{
+            console.log(result)
+        })
+        }
+        },5000)
+               
     },
     methods: {
        
