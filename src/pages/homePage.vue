@@ -1,23 +1,24 @@
 <template>
     <h1>QR & BARCODE SCANNER</h1>
-    <p>{{result}}</p>
     <StreamBarcodeReader id = "video" @decode="onDecode" @loaded="onLoaded"></StreamBarcodeReader>
     <div id="app">
     <p v-if="showSuccessMessage">Barcode erfolgreich gescannt!</p>
+    <itemComponent  v-if="showSuccessMessage" msg="RECOGNIZED"  :title="result" ></itemComponent>
     <img id="scanImg">
     <p>{{desc}}</p>
-</div>
-
+    </div>
+    
 </template>
   
 <script>
 import { StreamBarcodeReader } from "vue-barcode-reader";
 import {useCodeStore} from "@/stores/codes";
+import itemComponent from '../components/ItemComponent.vue'
 
 
 export default {
     name: 'homePage',
-    components: { StreamBarcodeReader },
+    components: { StreamBarcodeReader, itemComponent },
     data() {
         
         return {
@@ -43,13 +44,13 @@ export default {
                
     },
     methods: {
-
         onDecode(result) { 
             this.result = result 
             console.log("Res: " + result)
             let ele = JSON.parse(JSON.stringify(useCodeStore().getProdInfoFrm(parseInt(result))))
             document.getElementById("scanImg").src = ele.pictureLoc
             this.desc = ele.name
+            this.showSuccessMessage = true
         },
         onLoaded() {
              console.log("Finisehd loading")
@@ -72,6 +73,8 @@ h1 {
     color: rgb(93, 93, 93);
 }
 
+
+
 #video {
 
     width: fit-content;
@@ -79,4 +82,12 @@ h1 {
     
 }
 
+h2{
+    color: green;
+    font-size: 24pt;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+
 </style>
+
