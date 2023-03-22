@@ -5,16 +5,17 @@
     <div id="app">
     <p v-if="showSuccessMessage">Barcode erfolgreich gescannt!</p>
 </div>
-
+    <itemComponent title="test"></itemComponent>
 </template>
   
 <script>
 import { StreamBarcodeReader } from "vue-barcode-reader";
+import itemComponent from '../components/ItemComponent.vue'
 
 
 export default {
     name: 'homePage',
-    components: { StreamBarcodeReader },
+    components: { StreamBarcodeReader, itemComponent },
     data() {
         
         return {
