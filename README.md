@@ -35,4 +35,4 @@ npm run lint
 ```
 ### Link to Azure
 
-https://witty-flower-08eca7003.2.azurestaticapps.net/
+https://polite-ocean-0e8387d10.2.azurestaticapps.net/
