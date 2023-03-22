@@ -1,5 +1,6 @@
 <template>
-    <h1>{{ this.title }}</h1>
+    <h1>{{ this.title }} {{ this.msg }}</h1>
+    <h2 color="green">{{ this.msg }}</h2>
 
 </template>
   
@@ -14,10 +15,16 @@ export default {
         }
     },
     props:{
+        msg: {
+        type: String,
+        default: null
+        },
         title: {
         type: String,
         default: null
-        }
+        
+        },
+     
     },
     mounted(){      
     },

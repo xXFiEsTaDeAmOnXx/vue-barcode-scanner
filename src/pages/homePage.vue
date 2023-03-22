@@ -2,10 +2,10 @@
     <h1>QR & BARCODE SCANNER</h1>
     <StreamBarcodeReader id = "video" @decode="onDecode" @loaded="onLoaded"></StreamBarcodeReader>
     <div id="app">
-    <p class="success-message" v-if="showSuccessMessage">RECOGNIZED </p>{{result}}
+    
     
     </div>
-    <itemComponent title="test"></itemComponent>
+    <itemComponent  v-if="showSuccessMessage" msg="RECOGNIZED"  :title="result" ></itemComponent>
 </template>
   
 <script>
@@ -23,6 +23,7 @@ export default {
             showSuccessMessage: false,
                 result: "",
                 loaded:false,
+
         }
     },
     mounted(){
@@ -42,7 +43,9 @@ export default {
     methods: {
        
         onDecode(result) { this.result = result;  this.showSuccessMessage = true},
-        onLoaded(result) { console.log(result) }
+        onLoaded() {         
+            console.log("Finisehd loading")
+             this.loaded = true; }
         
     }
 }
@@ -60,10 +63,7 @@ h1 {
     color: rgb(93, 93, 93);
 }
 
-.sucess-message{
-    color: green;
-    font-weight: bold;
-}
+
 
 #video {
 
@@ -71,6 +71,13 @@ h1 {
     
     
 }
+
+h2{
+    color: green;
+    font-size: 24pt;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
 
 </style>
 
