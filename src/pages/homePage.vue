@@ -4,12 +4,15 @@
     <StreamBarcodeReader id = "video" @decode="onDecode" @loaded="onLoaded"></StreamBarcodeReader>
     <div id="app">
     <p v-if="showSuccessMessage">Barcode erfolgreich gescannt!</p>
+    <img id="scanImg">
+    <p>{{desc}}</p>
 </div>
 
 </template>
   
 <script>
 import { StreamBarcodeReader } from "vue-barcode-reader";
+import {useCodeStore} from "@/stores/codes";
 
 
 export default {
@@ -22,6 +25,7 @@ export default {
             showSuccessMessage: false,
                 result: "",
                 loaded:false,
+                desc: ""
         }
     },
     mounted(){
@@ -40,7 +44,13 @@ export default {
     },
     methods: {
 
-        onDecode(result) { this.result = result },
+        onDecode(result) { 
+            this.result = result 
+            console.log("Res: " + result)
+            let ele = JSON.parse(JSON.stringify(useCodeStore().getProdInfoFrm(parseInt(result))))
+            document.getElementById("scanImg").src = ele.pictureLoc
+            this.desc = ele.name
+        },
         onLoaded() {
              console.log("Finisehd loading")
              this.loaded = true;
