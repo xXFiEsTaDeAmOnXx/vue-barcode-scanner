@@ -11,21 +11,40 @@
 <script>
 import { StreamBarcodeReader } from "vue-barcode-reader";
 
+
 export default {
     name: 'homePage',
     components: { StreamBarcodeReader },
     data() {
         
         return {
+
             showSuccessMessage: false,
-                result: ""
-                
+                result: "",
+                loaded:false,
         }
     },
+    mounted(){
+        setTimeout(()=>{
+        if(!this.loaded){
+        this.$swal({
+        title: 'Error!',
+        text: 'You need to turn your camara on to use the barcode app.',
+        icon: 'error',
+        confirmButtonText: 'Okay'}).then(result =>{
+            console.log(result)
+        })
+        }
+        },100)
+               
+    },
     methods: {
-       
-        onDecode(result) { this.result = result;  showSuccessMessage: true},
-        onLoaded(result) { console.log(result) }
+
+        onDecode(result) { this.result = result },
+        onLoaded() {
+             console.log("Finisehd loading")
+             this.loaded = true;
+        }
         
     }
 }
