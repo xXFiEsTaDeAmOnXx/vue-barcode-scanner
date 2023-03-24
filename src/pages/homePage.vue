@@ -1,5 +1,5 @@
 <template>
-    <h1>QR & BARCODE SCANNER</h1>
+    <headerComponent :title="this.title"></headerComponent>
     <StreamBarcodeReader id="video" @decode="onDecode" @loaded="onLoaded"></StreamBarcodeReader>
     <div id="app">
         <p v-if="showSuccessMessage">Barcode erfolgreich gescannt!</p>
@@ -13,11 +13,12 @@ import { StreamBarcodeReader } from "vue-barcode-reader";
 import { useCodeStore } from "@/stores/codes";
 import itemComponent from '../components/ItemComponent.vue';
 import productComponent from '../components/ProductComponent.vue';
+import headerComponent from '../components/HeaderComponent.vue';
 
 
 export default {
     name: 'homePage',
-    components: { StreamBarcodeReader, itemComponent, productComponent },
+    components: { headerComponent, StreamBarcodeReader, itemComponent, productComponent },
     data() {
 
         return {
@@ -25,7 +26,8 @@ export default {
             result: "",
             loaded: false,
             productInfo: {},
-            store: null
+            store: null,
+            title: "QR & BARCODE SCANNER"
         }
     },
     mounted() {
@@ -49,9 +51,9 @@ export default {
     methods: {
         onDecode(result) {
             this.result = result
-            const array = this.store.getProdInfo;
-            this.productInfo = array.filter(product => result == product.barcode)
             this.showSuccessMessage = true
+            const array = this.store.getProdInfo;
+            this.productInfo = array.filter(product => result == product.barcode)[0]
         },
         onLoaded() {
             console.log("Finisehd loading")
@@ -65,21 +67,9 @@ export default {
   <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style 
 scoped>
-h1 {
-    background-color: rgba(72, 206, 197, 0.319);
-    text-align: center;
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 24pt;
-    color: rgb(93, 93, 93);
-}
-
-
-
 #video {
-
     width: fit-content;
-
-
+    z-index: -1;
 }
 
 h2 {
