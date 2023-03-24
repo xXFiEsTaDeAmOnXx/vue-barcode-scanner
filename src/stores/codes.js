@@ -12,9 +12,8 @@ export const useCodeStore = defineStore('codes', {
         ]
     }),
     getters: {
-        getProdInfoFrm(state) {
-            return (barcode) => state.productCatalog.filter((product) => product.barcode === barcode)[0]
-        }
+        getProdInfo:(state) =>  state.productCatalog
+    
     },
     actions: {}
 })

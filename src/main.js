@@ -15,8 +15,8 @@ const app = createApp(App)
 
 app.use(VueSweetalert2);
 
-
-app.use(createPinia())
+const pinja = createPinia();
+app.use(pinja);
 app.use(router)
 
 app.mount('#app')
