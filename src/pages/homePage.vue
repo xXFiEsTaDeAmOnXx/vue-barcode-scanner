@@ -34,6 +34,9 @@ export default {
         // Store-Referenz erstellen
         this.store = useCodeStore()
 
+        this.store.fetchItems()
+
+
         setTimeout(() => {
             if (!this.loaded) {
                 this.$swal({
@@ -51,9 +54,10 @@ export default {
     methods: {
         onDecode(result) {
             this.result = result
-            this.showSuccessMessage = true
             const array = this.store.getProdInfo;
             this.productInfo = array.filter(product => result == product.barcode)[0]
+            this.store.updateItems(this.productInfo.barcode)
+            this.showSuccessMessage = true
         },
         onLoaded() {
             console.log("Finisehd loading")
@@ -78,4 +82,3 @@ h2 {
     font-family: Helvetica, Arial, sans-serif;
 }
 </style>
-

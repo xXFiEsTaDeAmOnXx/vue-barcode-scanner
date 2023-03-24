@@ -33,7 +33,7 @@ export default {
     },
     updated() {
         if (this.product != {}) {
-            document.getElementById("scanImg").src = this.product.pictureLoc
+            document.getElementById("scanImg").src = 'https://vue-barcode-scanner-backend.azurewebsites.net' + this.product.pictureLoc
             this.desc = this.product.name
             console.log("ProductComponent: " + JSON.stringify(this.product))
             document.getElementById("productCom").style = "opacity: 1;"
