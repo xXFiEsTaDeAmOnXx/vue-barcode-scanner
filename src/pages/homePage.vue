@@ -26,10 +26,14 @@ export default {
             showSuccessMessage: false,
             result: "",
             loaded: false,
-            productInfo: {}
+            productInfo: {},
+            store: null
         }
     },
     mounted() {
+        // Store-Referenz erstellen
+        this.store = useCodeStore()
+
         setTimeout(() => {
             if (!this.loaded) {
                 this.$swal({
@@ -47,8 +51,8 @@ export default {
     methods: {
         onDecode(result) {
             this.result = result
-            this.productInfo = JSON.parse(JSON.stringify(useCodeStore().getProdInfoFrm(parseInt(result))))
-            document.getElementById("scanImg").src = this.productInfo.pictureLoc
+            const array = this.store.getProdInfo;
+            this.productInfo = array.filter(product => result == product.barcode)
             this.desc = this.productInfo.name
             this.showSuccessMessage = true
         },
