@@ -1,5 +1,5 @@
 <template>
-    <div class="container" id="productCom">
+    <div v-if="this.shown" class="container">
         <table style="width: 100%;">
             <colgroup>
                 <col span="1" style="width: 30%;">
@@ -9,8 +9,10 @@
             <!-- Put <thead>, <tbody>, and <tr>'s here! -->
             <tbody>
                 <tr>
-                    <td><img id="scanImg"></td>
-                    <td><p>{{ desc }}</p></td>
+                    <td><img :src="imageSrc" alt="picture of Product"></td>
+                    <td>
+                        <p>{{ desc }}</p>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -22,7 +24,7 @@
 export default {
     name: 'productComponent',
     data() {
-        return { desc: "" }
+        return { imageSrc: "", desc: "", shown: false }
     },
     props: {
         product: {
@@ -32,14 +34,12 @@ export default {
 
     },
     updated() {
-        if (this.product != {}) {
-            document.getElementById("scanImg").src = 'https://vue-barcode-scanner-backend.azurewebsites.net' + this.product.pictureLoc
+        if (this.product.pictureLoc != undefined && this.product.name != undefined && this.product != null) {
+            this.imageSrc = 'https://vue-barcode-scanner-backend.azurewebsites.net' + this.product.pictureLoc
             this.desc = this.product.name
-            console.log("ProductComponent: " + JSON.stringify(this.product))
-            document.getElementById("productCom").style = "opacity: 1;"
+            this.shown = true
+            console.log("ProductComponent: " + this.desc)
         }
-    },
-    methods: {
     }
 }
 </script>
@@ -56,6 +56,5 @@ img {
 
 .container {
     border: 1px solid black;
-    opacity: 0;
 }
 </style>

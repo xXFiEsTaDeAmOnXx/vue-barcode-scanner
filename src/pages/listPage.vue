@@ -1,10 +1,13 @@
 <template>
     <headerComponent :title="this.title"></headerComponent>
-    <productComponent v-for="productInfo in products" :product="productInfo"></productComponent>
+    <productComponent v-for="productInfo in products" :product="productInfo">
+        <p>{{ productInfo }}</p>
+    </productComponent>
 </template>
   
 <script>
 import { useCodeStore } from "@/stores/codes";
+import axios from 'axios'
 import productComponent from '../components/ProductComponent.vue';
 import headerComponent from '../components/HeaderComponent.vue';
 
@@ -22,8 +25,26 @@ export default {
     mounted() {
         // Store-Referenz erstellen
         this.store = useCodeStore()
+        this.productBarcodes = this.store.pastItems
+
+        for (let idx=0; idx <this.productBarcodes.length; idx++) {
+            this.getProductInfo(this.productBarcodes[idx])
+        }
+
+        console.log(this.products)
+        this.$forceUpdate()
+
     },
     methods: {
+        getProductInfo(barcode) {
+            axios
+                .get('https://vue-barcode-scanner-backend.azurewebsites.net' + '/api/item/' + barcode)
+                .then((response) => {
+                    this.products.push(response.data)
+                    this.$forceUpdate()
+                })
+                .catch((error) => console.log(error))
+        }
     }
 }
 </script>

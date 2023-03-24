@@ -60,7 +60,7 @@ export default {
             this.showSuccessMessage = true
         },
         onLoaded() {
-            console.log("Finisehd loading")
+            console.log("Finished loading")
             this.loaded = true;
         }
 
