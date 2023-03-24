@@ -53,9 +53,8 @@ export default {
         onDecode(result) {
             this.result = result
             const array = this.store.getProdInfo;
-            console.log(array)
             this.productInfo = array.filter(product => result == product.barcode)
-            //this.store.updateItems(this.productInfo.barcode) //append new item for history
+            this.store.updateItems(this.productInfo.barcode)
             this.showSuccessMessage = true
         },
         onLoaded() {

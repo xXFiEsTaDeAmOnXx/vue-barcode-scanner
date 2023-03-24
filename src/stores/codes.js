@@ -16,13 +16,13 @@ export const useCodeStore = defineStore('codes', {
             axios
                 .get('https://vue-barcode-scanner-backend.azurewebsites.net' + '/api/items')
                 .then((response) => {
-                        this.productCatalog = response.data
-                        console.log(response.data)
+                    this.productCatalog =JSON.parse(response.data)
                   })
             .catch((error) => console.log(error))
             },
-            updateItems(newItems) {
-                this.pastItems.append(newItems)
+            updateItems(barcode) {
+                this.pastItems.push(barcode)
+
             }
     }
 })
