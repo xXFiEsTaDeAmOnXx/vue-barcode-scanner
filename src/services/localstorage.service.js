@@ -1,5 +1,4 @@
 class LocalStorage {
-
   writeItems(items) {
     localStorage.setItem('items', JSON.stringify(items))
   }
@@ -11,7 +10,6 @@ class LocalStorage {
     }
     return JSON.parse(items)
   }
-
 }
 
 const LOCALSTORAGE_INSTANCE = new LocalStorage()
