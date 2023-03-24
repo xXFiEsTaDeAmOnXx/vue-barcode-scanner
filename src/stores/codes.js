@@ -1,18 +1,28 @@
 import { defineStore } from 'pinia'
+import axios from 'axios'
 
 export const useCodeStore = defineStore('codes', {
     state: () => ({
-        productCatalog: [
-            { name: "Krumbach Wasserflasche", pictureLoc: "src/assets/krumbach.jpg", barcode: 4009228120053 },
-            { name: "Aqua Wasserflasche", pictureLoc: "src/assets/aqua.jpg", barcode: 4001428065417 },
-            { name: "Kreidebox", pictureLoc: "src/assets/krumbach.jpg", barcode: 12134 },
-            //{name: 50, pictureLoc: "src/assets/krumbach.jpg", barcode: 4009228120053},
-            //{name: 50, pictureLoc: "src/assets/krumbach.jpg", barcode: 4009228120053},
-        ]
+        productCatalog: [],
+        pastItems:[]
     }),
+
     getters: {
         getProdInfo:(state) =>  state.productCatalog
     
     },
-    actions: {}
+    actions: {
+        async fetchItems(){
+            axios
+                .get('https://vue-barcode-scanner-backend.azurewebsites.net' + '/api/items')
+                .then((response) => {
+                        this.productCatalog = response.data
+                        console.log(response.data)
+                  })
+            .catch((error) => console.log(error))
+            },
+            updateItems(newItems) {
+                this.pastItems.append(newItems)
+            }
+    }
 })
