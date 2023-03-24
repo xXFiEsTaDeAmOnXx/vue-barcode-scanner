@@ -14,6 +14,7 @@ import { useCodeStore } from "@/stores/codes";
 import itemComponent from '../components/ItemComponent.vue';
 import productComponent from '../components/ProductComponent.vue';
 import headerComponent from '../components/HeaderComponent.vue';
+import { LOCALSTORAGE_INSTANCE } from '@/services/localstorage.service.js'
 
 
 export default {
@@ -58,6 +59,7 @@ export default {
             this.productInfo = array.filter(product => result == product.barcode)[0]
             this.store.updateItems(this.productInfo.barcode)
             this.showSuccessMessage = true
+            LOCALSTORAGE_INSTANCE.writeItems(this.store.pastItems)
         },
         onLoaded() {
             console.log("Finisehd loading")

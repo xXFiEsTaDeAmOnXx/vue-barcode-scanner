@@ -1,10 +1,11 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import { LOCALSTORAGE_INSTANCE } from '@/services/localstorage.service.js'
 
 export const useCodeStore = defineStore('codes', {
     state: () => ({
         productCatalog: [],
-        pastItems: []
+        pastItems: LOCALSTORAGE_INSTANCE.readItems()
     }),
 
     getters: {
