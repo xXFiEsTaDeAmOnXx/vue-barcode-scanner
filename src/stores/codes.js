@@ -22,8 +22,15 @@ export const useCodeStore = defineStore('codes', {
                 .catch((error) => console.log(error))
         },
         updateItems(barcode) {
-            this.pastItems.push(barcode)
-
+            if (!this.pastItems.includes(barcode)) {
+                this.pastItems.push(barcode)
+                LOCALSTORAGE_INSTANCE.writeItems(this.pastItems)
+            } else {
+                let idx = this.pastItems.indexOf(barcode);
+                this.pastItems.splice(idx, 1)
+                this.pastItems.splice(0, 0, barcode)
+                LOCALSTORAGE_INSTANCE.writeItems(this.pastItems)
+            }
         }
     }
 })

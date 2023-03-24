@@ -33,12 +33,19 @@ export default {
         },
 
     },
+    mounted() {
+        this.refreshView()
+    },
     updated() {
-        if (this.product.pictureLoc != undefined && this.product.name != undefined && this.product != null) {
-            this.imageSrc = 'https://vue-barcode-scanner-backend.azurewebsites.net' + this.product.pictureLoc
-            this.desc = this.product.name
-            this.shown = true
-            console.log("ProductComponent: " + this.desc)
+        this.refreshView()
+    }, methods: {
+        refreshView() {
+            if (this.product.pictureLoc != undefined && this.product.name != undefined && this.product != null) {
+                this.imageSrc = 'https://vue-barcode-scanner-backend.azurewebsites.net' + this.product.pictureLoc
+                this.desc = this.product.name
+                this.shown = true
+                //console.log("ProductComponent: " + this.desc)
+            }
         }
     }
 }
