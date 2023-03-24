@@ -5,8 +5,6 @@
         <p v-if="showSuccessMessage">Barcode erfolgreich gescannt!</p>
         <itemComponent v-if="showSuccessMessage" msg="RECOGNIZED" :title="result"></itemComponent>
         <productComponent :product="this.productInfo"></productComponent>
-        <img id="scanImg">
-        <p>{{ desc }}</p>
     </div>
 </template>
   
@@ -53,7 +51,6 @@ export default {
             this.result = result
             const array = this.store.getProdInfo;
             this.productInfo = array.filter(product => result == product.barcode)
-            this.desc = this.productInfo.name
             this.showSuccessMessage = true
         },
         onLoaded() {
