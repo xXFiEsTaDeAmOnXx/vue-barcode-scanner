@@ -1,62 +1,62 @@
 <template>
     <h1>QR & BARCODE SCANNER</h1>
-    <StreamBarcodeReader id = "video" @decode="onDecode" @loaded="onLoaded"></StreamBarcodeReader>
+    <StreamBarcodeReader id="video" @decode="onDecode" @loaded="onLoaded"></StreamBarcodeReader>
     <div id="app">
-    <p v-if="showSuccessMessage">Barcode erfolgreich gescannt!</p>
-    <itemComponent  v-if="showSuccessMessage" msg="RECOGNIZED"  :title="result" ></itemComponent>
-    <img id="scanImg">
-    <p>{{desc}}</p>
+        <p v-if="showSuccessMessage">Barcode erfolgreich gescannt!</p>
+        <itemComponent v-if="showSuccessMessage" msg="RECOGNIZED" :title="result"></itemComponent>
+        <productComponent :product="this.productInfo"></productComponent>
+        <img id="scanImg">
+        <p>{{ desc }}</p>
     </div>
-    
 </template>
   
 <script>
 import { StreamBarcodeReader } from "vue-barcode-reader";
-import {useCodeStore} from "@/stores/codes";
-import itemComponent from '../components/ItemComponent.vue'
+import { useCodeStore } from "@/stores/codes";
+import itemComponent from '../components/ItemComponent.vue';
+import productComponent from '../components/ProductComponent.vue';
 
 
 export default {
     name: 'homePage',
-    components: { StreamBarcodeReader, itemComponent },
+    components: { StreamBarcodeReader, itemComponent, productComponent },
     data() {
-        
-        return {
 
+        return {
             showSuccessMessage: false,
-                result: "",
-                loaded:false,
-                desc: ""
+            result: "",
+            loaded: false,
+            productInfo: {}
         }
     },
-    mounted(){
-        setTimeout(()=>{
-        if(!this.loaded){
-        this.$swal({
-        title: 'Error!',
-        text: 'You need to turn your camara on to use the barcode app.',
-        icon: 'error',
-        confirmButtonText: 'Okay'}).then(result =>{
-            console.log(result)
-        })
-        }
-        },5000)
-               
+    mounted() {
+        setTimeout(() => {
+            if (!this.loaded) {
+                this.$swal({
+                    title: 'Error!',
+                    text: 'You need to turn your camara on to use the barcode app.',
+                    icon: 'error',
+                    confirmButtonText: 'Okay'
+                }).then(result => {
+                    console.log(result)
+                })
+            }
+        }, 5000)
+
     },
     methods: {
-        onDecode(result) { 
-            this.result = result 
-            console.log("Res: " + result)
-            let ele = JSON.parse(JSON.stringify(useCodeStore().getProdInfoFrm(parseInt(result))))
-            document.getElementById("scanImg").src = ele.pictureLoc
-            this.desc = ele.name
+        onDecode(result) {
+            this.result = result
+            this.productInfo = JSON.parse(JSON.stringify(useCodeStore().getProdInfoFrm(parseInt(result))))
+            document.getElementById("scanImg").src = this.productInfo.pictureLoc
+            this.desc = this.productInfo.name
             this.showSuccessMessage = true
         },
         onLoaded() {
-             console.log("Finisehd loading")
-             this.loaded = true;
+            console.log("Finisehd loading")
+            this.loaded = true;
         }
-        
+
     }
 }
 </script>
@@ -64,7 +64,6 @@ export default {
   <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style 
 scoped>
-
 h1 {
     background-color: rgba(72, 206, 197, 0.319);
     text-align: center;
@@ -78,16 +77,14 @@ h1 {
 #video {
 
     width: fit-content;
-    
-    
+
+
 }
 
-h2{
+h2 {
     color: green;
     font-size: 24pt;
     font-family: Helvetica, Arial, sans-serif;
 }
-
-
 </style>
 
